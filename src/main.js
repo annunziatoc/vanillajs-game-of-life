@@ -42,8 +42,13 @@ arr.forEach((row, rowIndex) => {
 })
 
 arr[0][0].isAlive = true
-document.querySelector(`[data-row="0"][data-cell="0"]`).dataset.isAlive = "true"
+const cell = document.querySelector(`[data-row="0"][data-cell="0"]`)
+cell.dataset.isAlive = "true"
 
+if(Boolean(cell.dataset.isAlive)) {
+    cell.classList.remove('bg-black-500')
+    cell.classList.add('bg-green-500')
+}
 
 console.log(app)
 
