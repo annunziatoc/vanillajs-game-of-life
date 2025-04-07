@@ -57,4 +57,4 @@ for (let i = 0; i < 100; i++) {
     randCell.classList.add('bg-red-500')
 }
 
-
+console.log(app)
