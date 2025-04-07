@@ -21,7 +21,7 @@ const createCell = (rowIndex, cellIndex) => {
     }
 }
 
-const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 60}, (_, cellIndex) => createCell(rowIndex, cellIndex)))
+let arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 60}, (_, cellIndex) => createCell(rowIndex, cellIndex)))
 
 const grid = document.querySelector('.grid')
 arr.forEach((row, rowIndex) => {
@@ -41,6 +41,11 @@ arr.forEach((row, rowIndex) => {
     })
 })
 
+arr[0][0].isAlive = true
+document.querySelector(`[data-row="0"][data-cell="0"]`).dataset.isAlive = "true"
+
 
 console.log(app)
+
+
 
