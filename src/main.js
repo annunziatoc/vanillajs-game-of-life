@@ -21,24 +21,25 @@ const createCell = (rowIndex, cellIndex) => {
     }
 }
 
-const arr = Array.from({length: 15}, (_, rowIndex) =>
-    Array.from({length: 60}, (_, cellIndex) => createCell(rowIndex, cellIndex)))
+const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 60}, (_, cellIndex) => createCell(rowIndex, cellIndex)))
 
 const grid = document.querySelector('.grid')
-arr.forEach((row) => {
+arr.forEach((row, rowIndex) => {
     const rowDiv = document.createElement('div')
     rowDiv.className = 'rowDiv flex'
+    rowDiv.dataset.index = rowIndex.toString()
     grid.appendChild(rowDiv)
 
     row.forEach((cell) => {
         const cellDiv = document.createElement('div')
-        cellDiv.className = 'h-3 w-3 border bg-green-500'
+        cellDiv.className = `h-3 w-3 border bg-black-500`
         cellDiv.dataset.index = cell.index
         cellDiv.dataset.row = cell.row
         cellDiv.dataset.cell = cell.cell
         rowDiv.appendChild(cellDiv)
     })
 })
+
 
 console.log(app)
 
