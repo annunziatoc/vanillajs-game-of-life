@@ -14,10 +14,7 @@ app.innerHTML = `
  `
 const createCell = (rowIndex, cellIndex) => {
     return {
-        index: rowIndex * 60 + cellIndex,
-        row: rowIndex,
-        cell: cellIndex,
-        isAlive: false,
+        index: rowIndex * 60 + cellIndex, row: rowIndex, cell: cellIndex, isAlive: false,
     }
 }
 
@@ -32,7 +29,7 @@ arr.forEach((row, rowIndex) => {
 
     row.forEach((cell) => {
         const cellDiv = document.createElement('div')
-        cellDiv.className = `h-3 w-3 border bg-black-500`
+        cellDiv.className = `h-3 w-3 border bg-teal-500`
         cellDiv.dataset.index = cell.index
         cellDiv.dataset.row = cell.row
         cellDiv.dataset.cell = cell.cell
@@ -45,12 +42,19 @@ arr[0][0].isAlive = true
 const cell = document.querySelector(`[data-row="0"][data-cell="0"]`)
 cell.dataset.isAlive = "true"
 
-if(Boolean(cell.dataset.isAlive)) {
-    cell.classList.remove('bg-black-500')
-    cell.classList.add('bg-green-500')
+if (Boolean(cell.dataset.isAlive)) {
+    cell.classList.remove('bg-teal-500')
+    cell.classList.add('bg-red-500')
 }
 
-console.log(app)
+function randInt() {
+    return Math.floor(Math.random() * 899)
+}
 
+for (let i = 0; i < 100; i++) {
+    const randCell = document.querySelector(`[data-index="${randInt().toString()}"]`)
+    randCell.classList.remove('bg-teal-500')
+    randCell.classList.add('bg-red-500')
+}
 
 
