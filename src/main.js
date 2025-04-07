@@ -36,6 +36,7 @@ arr.forEach((row, rowIndex) => {
         cellDiv.dataset.index = cell.index
         cellDiv.dataset.row = cell.row
         cellDiv.dataset.cell = cell.cell
+        cellDiv.dataset.isAlive = cell.isAlive
         rowDiv.appendChild(cellDiv)
     })
 })
