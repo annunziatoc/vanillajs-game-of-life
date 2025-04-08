@@ -12,6 +12,7 @@ app.innerHTML = `
 </div>
 
  `
+
 const createCell = (rowIndex, cellIndex) => {
     return {
         index: rowIndex * 60 + cellIndex, row: rowIndex, cell: cellIndex, isAlive: false,
@@ -46,7 +47,7 @@ if (Boolean(cell.dataset.isAlive)) {
     cell.classList.remove('bg-teal-500')
     cell.classList.add('bg-red-500')
 }
-
+);
 function randInt() {
     return Math.floor(Math.random() * 899)
 }
@@ -58,3 +59,7 @@ for (let i = 0; i < 100; i++) {
 }
 
 console.log(app)
+
+
+
+
