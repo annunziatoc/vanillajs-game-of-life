@@ -18,13 +18,22 @@ const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 60}, (
 
 //VIEW
 
-const isAliveArray = []
+//IS ALIVE ARRAY
+const isAliveSet = new Set()
+
 //gen a random alive cell
-function generateAliveGridCell () {
+function generateAliveGridCell() {
     const randRowInt = Math.floor(Math.random() * 15)
     const randCellInt = Math.floor(Math.random() * 60)
-    isAliveArray.push([randRowInt, randCellInt])
-    return `${randRowInt}-${randCellInt}`
+    const cellId = `${randRowInt}-${randCellInt}`
+    if(isAliveSet.has(cellId)) {
+        if(isAliveSet.size < 100) {
+            return generateAliveGridCell()
+        } else return
+    } else {
+        isAliveSet.add(cellId)
+        return cellId
+    }
 }
 
 //create divs, rows and cells
@@ -39,14 +48,34 @@ arr.forEach((row, rowIdx) => {
         const cellDiv = document.createElement('div')
         cellDiv.className = (`cell border h-4 w-4 ${cell.isAlive ? 'bg-green-500' : ''}`)
         cellDiv.dataset.id = `${rowIdx}-${cellIdx}`
-
-        //append alive cell to the dom
-        const randInt = generateAliveGridCell()
-        cellDiv
+        cellDiv.dataset.isAlive = cell.isAlive
 
         rowContainer.appendChild(cellDiv)
     })
 })
 
 console.log(grid)
+
+
+function genBoard() {
+
+    for (let i = 0; i < 100; i++) {
+        //gen a valid row-int string literal
+        const randRowCellId = generateAliveGridCell()
+        if(randRowCellId === undefined) break
+        //grab a ref to the dom where: dataset.id === row-int string literal
+        //this is the model to view connection
+        const cell = document.querySelector(`[data-id='${randRowCellId}']`)
+        if (!cell) continue
+
+        //set is alive
+        cell.dataset.isAlive = 'true'
+        //change the bg
+        cell.classList.add( `${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
+    }
+}
+
+genBoard()
+
+
 
