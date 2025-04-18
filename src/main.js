@@ -28,8 +28,8 @@ function generateAliveGridCell() {
     const randRowInt = Math.floor(Math.random() * 15)
     const randCellInt = Math.floor(Math.random() * 60)
     const cellId = `${randRowInt}-${randCellInt}`
-    if(isAliveSet.has(cellId)) {
-        if(isAliveSet.size < 100) {
+    if (isAliveSet.has(cellId)) {
+        if (isAliveSet.size < 100) {
             return generateAliveGridCell()
         } else return
     } else {
@@ -64,7 +64,7 @@ function genBoard() {
     for (let i = 0; i < 100; i++) {
         //gen a valid row-int string literal
         const randRowCellId = generateAliveGridCell()
-        if(randRowCellId === undefined) break
+        if (randRowCellId === undefined) break
         //grab a ref to the dom where: dataset.id === row-int string literal
         //this is the model to view connection
         const cell = document.querySelector(`[data-id='${randRowCellId}']`)
@@ -72,11 +72,15 @@ function genBoard() {
         //set is alive
         cell.dataset.isAlive = 'true'
         //change the bg
-        cell.classList.add( `${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
+        cell.classList.add(`${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
     }
 }
 
 genBoard()
 
-
+const transform = [
+    [-1, -1], [-1, 0], [-1, 1],
+    [0, -1], [0, 0], [0, 1],
+    [1, -1], [1, 0], [1, 1]
+]
 
