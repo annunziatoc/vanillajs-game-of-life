@@ -3,7 +3,9 @@ import './style.css'
 const app = document.querySelector('#app')
 
 app.innerHTML = `
-<div class="grid-container"> </div>
+<div class="h-screen w-screen flex justify-center items-start pt-[10%] bg-slate-800">
+<div class="grid-container bg-gray-400"> </div>
+</div>
 `
 const grid = document.querySelector('.grid-container')
 // MODEL
@@ -14,7 +16,7 @@ const dataModel = (rowIndex, cellIndex) => ({
 })
 
 //array in memory
-const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 60}, (_, cellIndex) => dataModel(rowIndex, cellIndex)))
+const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 40}, (_, cellIndex) => dataModel(rowIndex, cellIndex)))
 
 //VIEW
 
@@ -67,7 +69,6 @@ function genBoard() {
         //this is the model to view connection
         const cell = document.querySelector(`[data-id='${randRowCellId}']`)
         if (!cell) continue
-
         //set is alive
         cell.dataset.isAlive = 'true'
         //change the bg
