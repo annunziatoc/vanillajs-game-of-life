@@ -3,7 +3,7 @@ import './style.css'
 const app = document.querySelector('#app')
 
 app.innerHTML = `
-<div class="h-screen w-screen flex justify-center items-start pt-[10%] bg-slate-800">
+<div class="h-screen w-screen flex justify-center items-start pt-[10%] bg-cyan-950">
 <div class="grid-container bg-gray-400"> </div>
 </div>
 `
