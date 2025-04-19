@@ -84,3 +84,16 @@ const transform = [
     [1, -1], [1, 0], [1, 1]
 ]
 
+// console.log(isAliveSet)
+
+//quicksort for fun
+function quicksort (iterable) {
+    const unsortedArr = [...iterable]
+    const sortedArr = []
+    const [row,col] = unsortedArr[0].split('-').map((str) => Number(str))
+
+    return sortedArr
+}
+
+// console.log([...isAliveSet])
+console.log(quicksort(isAliveSet), 'quicksort')
