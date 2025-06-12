@@ -4,7 +4,7 @@ const app = document.querySelector('#app')
 
 app.innerHTML = `
 <div class="h-screen w-screen flex justify-center items-start pt-[10%] bg-cyan-950">
-<div class="grid-container bg-gray-400"> </div>
+    <div class="grid-container bg-gray-400"> </div>
 </div>
 `
 const grid = document.querySelector('.grid-container')
@@ -16,7 +16,9 @@ const dataModel = (rowIndex, cellIndex) => ({
 })
 
 // array in memory
-const arr = Array.from({length: 15}, (_, rowIndex) => Array.from({length: 40}, (_, cellIndex) => dataModel(rowIndex, cellIndex)))
+const arr = Array.from({length: 15},
+    (_, rowIndex) => Array.from({length: 40},
+        (_, cellIndex) => dataModel(rowIndex, cellIndex)))
 
 // VIEW
 
@@ -25,13 +27,18 @@ let isAliveSet = new Set()
 
 // gen a random alive cell
 function generateAliveGridCell() {
+    if (isAliveSet.size >= 100) { //early return if the set is full
+        return undefined
+    }
+
+    //generate a new id
     const randRowInt = Math.floor(Math.random() * 15)
-    const randCellInt = Math.floor(Math.random() * 60)
+    const randCellInt = Math.floor(Math.random() * 40)
     const cellId = `${randRowInt}-${randCellInt}`
+
+    //if it already includes the newly generated id we try again
     if (isAliveSet.has(cellId)) {
-        if (isAliveSet.size < 100) {
-            return generateAliveGridCell()
-        } else return
+        return generateAliveGridCell()
     } else {
         isAliveSet.add(cellId)
         return cellId
@@ -63,7 +70,7 @@ function genBoard() {
 
     for (let i = 0; i < 100; i++) {
         // gen a valid row-int string literal
-        const randRowCellId = generateAliveGridCell()
+        const randRowCellId = generateAliveGridCell() //gen til we return undefined
         if (randRowCellId === undefined) break
         // grab a ref to the dom where: dataset.id === row-int string literal
         // this is the model to view connection
@@ -73,18 +80,15 @@ function genBoard() {
         cell.dataset.isAlive = 'true'
         // change the bg
         cell.classList.add(`${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
-        const single = document.querySelector(`[data-id='0-0']`)
-        single.classList.add('bg-blue-400')
     }
 }
 
+
 genBoard()
 
-const transform = [
-    [-1, -1], [-1, 0], [-1, 1],
-    [0, -1], [0, 0], [0, 1],
-    [1, -1], [1, 0], [1, 1]
-]
+const transform = {
+    NW: [-1, -1], N: [-1, 0], NE: [-1, 1], W: [0, -1], E: [0, 1], SW: [1, -1], S: [1, 0], SE: [1, 1]
+}
 
 
 function sortRowColPairs(pairs) {
@@ -101,25 +105,23 @@ function sortRowColPairs(pairs) {
 
 isAliveSet = new Set(sortRowColPairs(isAliveSet))
 
-function transformPair(set) {
 
-    const intPair = '0-0'.split('-').map((value) => parseInt(value,10))
-    const row = transform[5][0]
-    const cell = transform[5][1]
-    intPair[0] = intPair[0] + row
-    intPair[1] = intPair[1] + cell
-    const nextPair = document.querySelector(`[data-id='${intPair[0]}-${intPair[1]}']`)
-    nextPair.classList.add('bg-blue-400')
+function transformPair(set, direction, location) {
+
+    const loc = location.split('-').map((value) => parseInt(value))
+    const tf = transform[direction]
+    const output = loc.map((value, index) => {
+        return value + tf[index]
+    })
+
+    console.log(output)
+
 
 }
 
-transformPair(isAliveSet)
+transformPair(isAliveSet, 'E', '1-1')
 
-
-
-
-
-
+//test
 
 
 
