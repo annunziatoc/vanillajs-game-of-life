@@ -26,7 +26,7 @@ const arr = Array.from({length: 15},
 let isAliveSet = new Set()
 
 // gen a random alive cell
-function generateAliveGridCell() {
+function generateAliveGridCellId() {
     if (isAliveSet.size >= 100) { //early return if the set is full
         return undefined
     }
@@ -38,7 +38,7 @@ function generateAliveGridCell() {
 
     //if it already includes the newly generated id we try again
     if (isAliveSet.has(cellId)) {
-        return generateAliveGridCell()
+        return generateAliveGridCellId()
     } else {
         isAliveSet.add(cellId)
         return cellId
@@ -68,17 +68,13 @@ arr.forEach((row, rowIdx) => {
 
 function genBoard() {
 
-    for (let i = 0; i < 100; i++) {
-        // gen a valid row-int string literal
-        const randRowCellId = generateAliveGridCell() //gen til we return undefined
-        if (randRowCellId === undefined) break
-        // grab a ref to the dom where: dataset.id === row-int string literal
-        // this is the model to view connection
-        const cell = document.querySelector(`[data-id='${randRowCellId}']`)
-        if (!cell) continue
-        // set is alive
+    while (true) {
+        const cellId = generateAliveGridCellId() //gen til we return undefined
+        if (cellId === undefined) break //reached 100 limit
+
+        const cell = document.querySelector(`[data-id='${cellId}']`)
+        if (!cell) continue //just making sure were not setting props on non-existent cells
         cell.dataset.isAlive = 'true'
-        // change the bg
         cell.classList.add(`${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
     }
 }
@@ -90,8 +86,7 @@ const transform = {
     NW: [-1, -1], N: [-1, 0], NE: [-1, 1], W: [0, -1], E: [0, 1], SW: [1, -1], S: [1, 0], SE: [1, 1]
 }
 
-
-function sortRowColPairs(pairs) {
+function sortSetIds(pairs) {
     return [...pairs].sort((a, b) => {
         const [aRow, aCell] = a.split('-').map((value) => parseInt(value, 10))
         const [bRow, bCell] = b.split('-').map((value) => parseInt(value, 10))
@@ -103,8 +98,8 @@ function sortRowColPairs(pairs) {
     })
 }
 
-isAliveSet = new Set(sortRowColPairs(isAliveSet))
-
+isAliveSet = new Set(sortSetIds(isAliveSet))
+console.log(isAliveSet)
 
 function transformPair(set, direction, location) {
 
