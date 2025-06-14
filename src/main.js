@@ -82,9 +82,6 @@ function genBoard() {
 
 genBoard()
 
-const transform = {
-    NW: [-1, -1], N: [-1, 0], NE: [-1, 1], W: [0, -1], E: [0, 1], SW: [1, -1], S: [1, 0], SE: [1, 1]
-}
 
 function sortSetIds(pairs) {
     return [...pairs].sort((a, b) => {
@@ -98,23 +95,35 @@ function sortSetIds(pairs) {
     })
 }
 
+
 isAliveSet = new Set(sortSetIds(isAliveSet))
-console.log(isAliveSet)
-
-function transformPair(set, direction, location) {
-
-    const loc = location.split('-').map((value) => parseInt(value))
-    const tf = transform[direction]
-    const output = loc.map((value, index) => {
-        return value + tf[index]
-    })
-
-    console.log(output)
 
 
+const transform = {
+    NW: [-1, -1], N: [-1, 0], NE: [-1, 1], W: [0, -1], E: [0, 1], SW: [1, -1], S: [1, 0], SE: [1, 1]
 }
 
-transformPair(isAliveSet, 'E', '1-1')
+
+
+
+function checkNeighbors(targetCell) {
+
+    const cell = document.querySelector(`[data-id='${targetCell}']`)
+    const [x,y] = cell.dataset.id.split('-').map((x) => Number(x))
+
+    let aliveCount = 0
+    for(let neighbor in transform) {
+        const tf = [x + transform[neighbor][0], y + transform[neighbor][1]]
+        const div = document.querySelector(`[data-id="${tf[0]}-${tf[1]}"]`)
+        if(div && div.dataset.isAlive === "true") {
+           aliveCount ++
+        }
+    }
+    return aliveCount
+}
+
+
+console.log(checkNeighbors('0-0'))
 
 //test
 
