@@ -75,7 +75,7 @@ function genBoard() {
         const cell = document.querySelector(`[data-id='${cellId}']`)
         if (!cell) continue //just making sure were not setting props on non-existent cells
         cell.dataset.isAlive = 'true'
-        cell.classList.add(`${cell.dataset.isAlive ? 'bg-green-400' : ''}`)
+        cell.classList.add('bg-green-400')
     }
 }
 
@@ -122,10 +122,35 @@ function checkNeighbors(targetCell) {
     return aliveCount
 }
 
+function theGameOfLife() {
 
-console.log(checkNeighbors('0-0'))
 
-//test
+    document.querySelectorAll('.cell').forEach((cell) => {
+        const nbrs = checkNeighbors(cell.dataset.id)
+
+        if(cell.dataset.isAlive === 'true'&& !(nbrs === 2 || nbrs === 3)) {
+            cell.dataset.isAlive = 'false'
+            cell.classList.remove('bg-green-400')
+        }
+
+        if(cell.dataset.isAlive === 'false' && nbrs === 3) {
+            cell.dataset.isAlive = 'true'
+            cell.classList.add('bg-green-400')
+        }
+
+    })
+}
+
+for(let i = 0; i < 100; i++) {
+    setTimeout(() => {
+        console.log('hey')
+        theGameOfLife()
+    }, 100  * i)
+}
+
+
+
+
 
 
 
