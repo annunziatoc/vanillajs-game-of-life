@@ -141,13 +141,14 @@ function theGameOfLife() {
     })
 }
 
-for(let i = 0; i < 100; i++) {
-    setTimeout(() => {
-        console.log('hey')
-        theGameOfLife()
-    }, 100  * i)
-}
-
+let generation  = 0
+const gameInterval = setInterval(() => {
+    theGameOfLife()
+    generation++
+    if(generation >= 100) {
+        clearInterval(gameInterval)
+    }
+}, 100)
 
 
 
